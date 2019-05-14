@@ -90,10 +90,10 @@ public final class Geth {
     ///   - to: which address to send to
     ///   - gasLimit: gas limit
     ///   - gasPrice: gas price
-    ///   - value: value in wei
+    ///   - value: value in wei, in hex format
     ///   - data: data to include in tx
     ///   - completionHandler:
-    public func getEstimateGas(from: String? = nil, to: String, gasLimit: Int? = nil, gasPrice: Int? = nil, value: Int? = nil, data: String? = nil, completionHandler: @escaping (Result<Wei>) -> Void) {
+    public func getEstimateGas(from: String? = nil, to: String, gasLimit: Int? = nil, gasPrice: Int? = nil, value: String? = nil, data: String? = nil, completionHandler: @escaping (Result<Wei>) -> Void) {
         let request = JSONRPC.GetEstimatGas(
             from: from,
             to: to,

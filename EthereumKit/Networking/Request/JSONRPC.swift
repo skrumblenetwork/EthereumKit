@@ -137,7 +137,7 @@ public final class JSONRPC {
         public let to: String
         public let gasLimit: Int?
         public let gasPrice: Int?
-        public let value: Int?
+        public let value: String?
         public let data: String?
         
         public var method: String {
