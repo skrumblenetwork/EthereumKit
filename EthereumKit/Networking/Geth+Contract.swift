@@ -30,20 +30,20 @@ extension Geth {
     }
     
     
-    public func approve(contract: ERC20, from wallet: String, spender address: String, amount: String, completionHandler: @escaping (Result<Balance>) -> Void) {
+    public func approve(contract: ERC20, from wallet: String, spender address: String, amount: String, completionHandler: @escaping (Result<Bool>) -> Void) {
 
         let data = try! contract.generateApproveDataParameter(spender: address, amount: amount)
         
         self.call(from: wallet, to: contract.contractAddress, data: data.toHexString().addHexPrefix()) { result in
             
             switch result {
-            case .success(let hexBalance):
+            case .success(let hex):
                 
-                if let wei = Wei(hexBalance.lowercased().stripHexPrefix(), radix: 16) {
-                    let balance = Balance(wei: wei)
-                    completionHandler(.success(balance))
+                if let wei = BInt(hex.lowercased().stripHexPrefix(), radix: 16) {
+                    let success = wei.isNotZero()
+                    completionHandler(.success(success))
                 } else {
-                    completionHandler(.failure(EthereumKitError.convertError(.failedToConvert(hexBalance))))
+                    completionHandler(.failure(EthereumKitError.convertError(.failedToConvert(hex))))
                 }
             case .failure(let error):
                 completionHandler(.failure(error))
