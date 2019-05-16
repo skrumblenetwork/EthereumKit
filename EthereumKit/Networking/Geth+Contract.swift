@@ -28,4 +28,26 @@ extension Geth {
             }
         }
     }
+    
+    
+    public func approve(contract: ERC20, from wallet: String, spender address: String, amount: String, completionHandler: @escaping (Result<Balance>) -> Void) {
+
+        let data = try! contract.generateApproveDataParameter(spender: address, amount: amount)
+        
+        self.call(from: wallet, to: contract.contractAddress, data: data.toHexString().addHexPrefix()) { result in
+            
+            switch result {
+            case .success(let hexBalance):
+                
+                if let wei = Wei(hexBalance.lowercased().stripHexPrefix(), radix: 16) {
+                    let balance = Balance(wei: wei)
+                    completionHandler(.success(balance))
+                } else {
+                    completionHandler(.failure(EthereumKitError.convertError(.failedToConvert(hexBalance))))
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@ extension ERC20 {
     enum ContractFunctions {
         case balanceOf(address: String)
         case transfer(address: String, amount: BInt)
+        case approve(address: String, amount: BInt)
         
         var methodSignature: Data {
             switch self {
@@ -9,6 +10,8 @@ extension ERC20 {
                 return generateSignature(method: "balanceOf(address)")
             case .transfer:
                 return generateSignature(method: "transfer(address,uint256)")
+            case .approve:
+                return generateSignature(method: "approve(address,uint256)")
             }
         }
         
@@ -23,7 +26,7 @@ extension ERC20 {
                 let noHexAddress = ERC20.pad(string: address.stripHexPrefix())
                 return Data(hex: methodSignature.toHexString() + noHexAddress)
                 
-            case .transfer(let toAddress, let poweredAmount):
+            case .transfer(let toAddress, let poweredAmount), .approve(let toAddress, let poweredAmount):
                 let address = ERC20.pad(string: toAddress.stripHexPrefix())
                 let amount = ERC20.pad(string: poweredAmount.serialize().toHexString())
                 return Data(hex: methodSignature.toHexString() + address + amount)

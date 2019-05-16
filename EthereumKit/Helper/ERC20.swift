@@ -40,6 +40,11 @@ public struct ERC20 {
         return ERC20.ContractFunctions.transfer(address: toAddress, amount: poweredAmount).data
     }
     
+    public func generateApproveDataParameter(spender address: String, amount: String) throws -> Data {
+        let poweredAmount = try power(amount: amount)
+        return ERC20.ContractFunctions.approve(address: address, amount: poweredAmount).data
+    }
+    
     /// Power the amount by the decimal
     ///
     /// - Parameter:
