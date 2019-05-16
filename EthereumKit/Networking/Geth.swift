@@ -2,7 +2,7 @@
 public final class Geth {
     
     private let configuration: Configuration
-    private let httpClient: HTTPClient
+    public let httpClient: HTTPClient
     
     /// init initialize Geth instance
     ///
