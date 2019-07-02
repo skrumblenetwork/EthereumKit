@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         
         // To get a balance of an address, call `getBalance`.
         geth.getBalance(of: address) { _ in }
-        
+
         // You can get the current nonce by calling
         geth.getTransactionCount(of: address) { result in
             switch result {
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
                 } catch let error {
                     fatalError("Error: \(error.localizedDescription)")
                 }
-                
+
                 let rawTransaction = RawTransaction(value: wei, to: address, gasPrice: Converter.toWei(GWei: 10), gasLimit: 21000, nonce: nonce)
                 let tx: String
                 do {
@@ -69,21 +69,31 @@ class ViewController: UIViewController {
                 } catch let error {
                     fatalError("Error: \(error.localizedDescription)")
                 }
-                
+
                 // It returns the transaction ID.
                 geth.sendRawTransaction(rawTransaction: tx) { _ in }
-                
+
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
         }
         
-        let contract = ERC20(contractAddress: "0xd99b8A7fA48E25Cce83B81812220A3E03Bf64e5f", decimal: 18, symbol: "SKM")
-        geth.getTokenBalance(contract: contract, address: address) { result in
+        let contract = ERC20(contractAddress: "0x0A170B598A2F5A801498746D6196cF96dFf47ee3", decimal: 18, symbol: "ALLY")
+        geth.getTokenBalance(contract: contract, address: "0x4Bea50f116A4722a6B0266712e1B9f923F82A796") { result in
             switch result {
                 
             case .success(let balance):
                 print("Token balance: \(balance)")
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+        
+        geth.approve(contract: contract, from: "0x4Bea50f116A4722a6B0266712e1B9f923F82A796", spender: "0x0A170B598A2F5A801498746D6196cF96dFf47ee3", amount: "1") { (result) in
+            switch result {
+
+            case .success(let success):
+                print("Token approve: \(success)")
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
