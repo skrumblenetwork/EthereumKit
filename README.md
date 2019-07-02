@@ -70,7 +70,7 @@ geth.sendRawTransaction(rawTransaction: tx) { result in
 - [popshootjapan/WeiWallet-iOS](https://github.com/popshootjapan/WeiWallet-iOS): Wei Wallet for iOS
 ## Author
 
-Ryo Fukuda, [@yuzushioh](https://twitter.com/yuzushioh), yuzushioh@gmail.com
+Ryo Fukuda, [@yuzushioh](https://twitter.com/yuzushioh),, yuzushioh@gmail.com
 
 
 ## License
