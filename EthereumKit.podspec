@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "EthereumKit"
-  spec.version      = "0.0.1"
+  spec.version      = "2.0.1"
   spec.summary      = "EthereumKit is a free, open-source Swift framework for easily interacting with the Ethereum."
 
   # This description is used to generate tags and improve search results.
@@ -49,6 +49,5 @@ Pod::Spec.new do |spec|
 
 
   spec.dependency "CryptoEthereumSwift",  "~> 2.0.0"
-  spec.dependency "CryptoSwift", "~> 1.0.0"
 
 end
